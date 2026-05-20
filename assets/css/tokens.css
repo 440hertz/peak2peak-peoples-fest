@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Peak 2 Peak Peoples' Festival — Design Tokens
+   The single source of truth for color, type, spacing, and motion.
+   Edit values here; never hard-code colors elsewhere.
+   ========================================================================== */
+
+:root {
+  /* ---------- Brand palette (user-supplied) ---------- */
+  --canary:        #f2f230;   /* primary brand accent — CTAs, key highlights */
+  --lime:          #c2f261;
+  --mint:          #91f291;
+  --aqua:          #61f2c2;
+  --cyan:          #30f2f2;
+
+  /* Slightly-darkened companion shades for hover / pressed / borders.
+     Each is the same hue, lower lightness — readable on white. */
+  --canary-deep:   #c4c426;
+  --lime-deep:     #9bc94a;
+  --mint-deep:     #6dc96d;
+  --aqua-deep:     #45c99a;
+  --cyan-deep:     #1fc4c4;
+
+  /* Signature gradient (yellow -> cyan) */
+  --gradient-brand: linear-gradient(
+    90deg,
+    var(--canary) 0%,
+    var(--lime)   25%,
+    var(--mint)   50%,
+    var(--aqua)   75%,
+    var(--cyan)   100%
+  );
+  --gradient-brand-diag: linear-gradient(
+    135deg,
+    var(--canary) 0%,
+    var(--lime)   25%,
+    var(--mint)   50%,
+    var(--aqua)   75%,
+    var(--cyan)   100%
+  );
+  --gradient-brand-vert: linear-gradient(
+    180deg,
+    var(--canary) 0%,
+    var(--lime)   25%,
+    var(--mint)   50%,
+    var(--aqua)   75%,
+    var(--cyan)   100%
+  );
+
+  /* ---------- Neutral scale ---------- */
+  --ink:           #0d0d0d;   /* near-black — headlines & primary text */
+  --gray-900:      #1a1a1a;
+  --gray-800:      #262626;
+  --gray-700:      #3d3d3d;   /* body copy on light bg */
+  --gray-600:      #5a5a5a;
+  --gray-500:      #767676;   /* secondary / muted text */
+  --gray-400:      #9a9a9a;
+  --gray-300:      #c8c8c8;   /* subtle borders */
+  --gray-200:      #dedede;
+  --gray-100:      #ededed;   /* dividers, alt section bg */
+  --gray-50:       #f4f4f1;
+  --paper:         #fafaf7;   /* main page background — warm off-white */
+  --white:         #ffffff;
+
+  /* ---------- Semantic role mapping ----------
+     Use these in component CSS. Never reference brand colors directly
+     in a layout — go through these so we can re-skin in one place. */
+  --color-bg:               var(--paper);
+  --color-bg-alt:           var(--gray-100);
+  --color-bg-card:          var(--white);
+  --color-text:             var(--ink);
+  --color-text-muted:       var(--gray-500);
+  --color-text-on-accent:   var(--ink);    /* black text sits on every neon */
+  --color-border:           var(--gray-300);
+  --color-border-strong:    var(--gray-700);
+  --color-accent:           var(--canary); /* primary CTA fill */
+  --color-accent-hover:     var(--canary-deep);
+  --color-link:             var(--ink);
+  --color-link-underline:   var(--cyan-deep);
+
+  /* ---------- Typography ----------
+     Display: Tanker (Fontshare) — wide, chunky display sans with poster
+              energy. Single weight (400). Used for headlines & wordmark.
+     Body:    Bespoke Serif (Fontshare) — refined contemporary serif. Used
+              for body copy, eyebrows, sub-labels, button text. */
+  --font-display: 'Tanker', 'Impact', 'Arial Black', system-ui, sans-serif;
+  --font-body:    'Bespoke Serif', Georgia, 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Type scale — mobile-first, fluid (clamp = min, preferred-vw, max) */
+  --fs-xs:    0.75rem;                          /* 12 */
+  --fs-sm:    0.875rem;                         /* 14 */
+  --fs-base:  1rem;                             /* 16 */
+  --fs-md:    1.125rem;                         /* 18 */
+  --fs-lg:    1.25rem;                          /* 20 */
+  --fs-xl:    clamp(1.5rem,   1.2rem + 1.2vw, 2rem);
+  --fs-2xl:   clamp(2rem,     1.5rem + 2vw,   3rem);
+  --fs-3xl:   clamp(2.75rem,  1.8rem + 4vw,   4.5rem);
+  --fs-display:clamp(3.5rem,  2rem + 7vw,    7.5rem);  /* hero headline */
+
+  /* Line heights */
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  /* Letter spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.12em;
+
+  /* ---------- Spacing scale (rem-based, 4px increments) ---------- */
+  --space-1:  0.25rem;   /*  4 */
+  --space-2:  0.5rem;    /*  8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+  --space-10: 8rem;      /* 128 */
+
+  /* ---------- Layout ---------- */
+  --container-narrow: 42rem;   /* prose */
+  --container-base:   64rem;   /* default content width */
+  --container-wide:   80rem;   /* wide sections */
+  --section-pad-y:    clamp(3rem, 5vw + 1rem, 6rem);
+
+  /* ---------- Radii ---------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* ---------- Borders ---------- */
+  --border-thin:  1px solid var(--color-border);
+  --border-bold:  2px solid var(--ink);
+
+  /* ---------- Shadows (used sparingly — flat aesthetic) ---------- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-pop: 4px 4px 0 var(--ink);   /* poster-style offset shadow */
+
+  /* ---------- Motion ---------- */
+  --ease-out:  cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in:   cubic-bezier(0.7, 0, 0.7, 0.3);
+  --dur-fast:  150ms;
+  --dur-base:  250ms;
+  --dur-slow:  450ms;
+
+  /* ---------- Z-index scale ---------- */
+  --z-nav:     50;
+  --z-overlay: 60;
+  --z-modal:   70;
+}
+
+/* Reduced motion — respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+}

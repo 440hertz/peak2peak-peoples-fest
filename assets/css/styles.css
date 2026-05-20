@@ -1,0 +1,1016 @@
+/* ==========================================================================
+   Peak 2 Peak Peoples' Festival — Base styles
+   Reset, base typography, layout primitives, and shared components.
+   Section-specific styles live below in clearly labeled blocks.
+   ========================================================================== */
+
+@import url('./tokens.css');
+
+/* ---------- Modern reset (lightweight) ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body, h1, h2, h3, h4, h5, p, figure, blockquote, dl, dd { margin: 0; }
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; margin: 0; }
+img, picture, svg, video { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: inherit; }
+
+/* Scroll behavior */
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- Base typography ---------- */
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-feature-settings: 'kern', 'liga', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;             /* Tanker ships in a single weight */
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); letter-spacing: var(--tracking-normal); }
+
+/* Body emphasis via Bespoke Serif weights */
+strong, b { font-weight: 700; }
+
+p { max-width: 65ch; }
+
+a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-link-underline);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+a:hover { text-decoration-color: var(--ink); }
+
+/* Selection color */
+::selection { background: var(--canary); color: var(--ink); }
+
+/* Focus ring — visible, accessible, on-brand */
+:focus-visible {
+  outline: 3px solid var(--cyan-deep);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Skip link — accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  background: var(--ink);
+  color: var(--canary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  z-index: var(--z-modal);
+  transition: top var(--dur-base) var(--ease-out);
+}
+.skip-link:focus { top: var(--space-4); }
+
+/* ---------- Layout primitives ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-base);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-7));
+}
+.container--wide   { max-width: var(--container-wide); }
+.container--narrow { max-width: var(--container-narrow); }
+
+.section {
+  padding-block: var(--section-pad-y);
+}
+
+/* ---------- Section-flag (a small label above section headings) ---------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--gray-700);
+  margin-bottom: var(--space-3);
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: var(--ink);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: var(--tracking-normal);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  background: var(--ink);
+  color: var(--canary);
+  cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+  box-shadow: var(--shadow-pop);
+}
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+  text-decoration: none;
+}
+.btn:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+.btn--accent {
+  background: var(--canary);
+  color: var(--ink);
+}
+.btn--accent:hover { background: var(--canary-deep); }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: none;
+}
+.btn--ghost:hover {
+  background: var(--ink);
+  color: var(--canary);
+  transform: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   BRAND RIBBON
+   Thin gradient stripe pinned to the top of the page. Recurring brand motif
+   that persists when the hero image lands. Reuse <div class="ribbon"></div>
+   between sections as a divider.
+   ========================================================================== */
+
+.ribbon {
+  display: block;
+  width: 100%;
+  height: 10px;
+  background: var(--gradient-brand);
+  border-bottom: 2px solid var(--ink);
+}
+.ribbon--lg { height: 14px; }
+.ribbon--xs { height: 6px; }
+
+/* ==========================================================================
+   HERO
+   Festival name centerpiece, date + location below, CTAs at the bottom.
+   Black-on-neon for max impact.
+
+   IMAGE SWAP — when the poster art arrives:
+     1. Drop the file into /assets/images/hero.jpg (or .png/.webp)
+     2. Set --hero-image to its url() in the .hero rule below
+     3. (Optional) toggle .hero--has-image class for the darken treatment
+   The brand gradient stays alive via the nav's border-top,
+   so the color identity persists even when an image takes the canvas.
+   ========================================================================== */
+
+.hero {
+  --hero-image: none;           /* set to url('./...') to enable image */
+
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-7) clamp(var(--space-4), 4vw, var(--space-7)) var(--space-6);
+  background: var(--gradient-brand-diag);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* When an image is set, replace the gradient with the image (cover fit). */
+.hero--has-image {
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.25) 100%),
+    var(--hero-image) center/cover no-repeat,
+    var(--gradient-brand-diag);   /* fallback while image loads */
+}
+
+/* Decorative grain/noise overlay — purely textural, very subtle */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.06) 1px, transparent 1.5px),
+                    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.05) 1px, transparent 1.5px);
+  background-size: 24px 24px, 36px 36px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+/* Hero no longer has its own top header — the sticky .nav above the hero
+   provides the wordmark and primary navigation. The hero opens directly
+   with the title block. */
+
+.hero__center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  padding-block: var(--space-7);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: 400;             /* Tanker ships in one weight */
+  line-height: 1;               /* fixed, predictable rhythm regardless of inline font */
+  letter-spacing: -0.02em;      /* Tanker is wide — gentler negative tracking */
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+  max-width: 16ch;
+}
+.hero__title-line {
+  display: block;
+  line-height: 1;               /* each line gets the same fixed leading */
+}
+.hero__title-line + .hero__title-line {
+  margin-top: 0.04em;           /* small optical gap between stacked lines */
+}
+.hero__title-em {
+  /* Tanker has no italic, so "Peoples'" renders in Bespoke Serif italic
+     for a striking display-sans + italic-serif pairing.
+
+     Two compensations to keep the line visually aligned with Tanker:
+       1. Boost font-size so the italic's cap-height roughly matches
+          Tanker's character height (lowercase x-height alone is too
+          small and reads as a different size).
+       2. Pin line-height + use inline-block so the italic's ascenders
+          and descenders don't push the line's leading around.
+       3. Nudge vertical-align so optical baseline aligns with Tanker
+          (Tanker's baseline visually sits a hair lower than the serif's). */
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.18em;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: -0.045em;
+  text-transform: none;
+  letter-spacing: -0.015em;
+}
+
+.hero__title-tail {
+  /* "Fest" — sized just below the default so "Peoples'" still dominates.
+     Extra left margin opens up the optical gap so it doesn't kiss the
+     italic apostrophe of "Peoples'". */
+  display: inline-block;
+  font-size: 0.93em;
+  line-height: 1;
+  vertical-align: baseline;
+  margin-left: 0.18em;
+}
+
+.hero__meta {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: var(--tracking-normal);
+}
+.hero__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.hero__meta-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: inline-block;
+}
+
+.hero__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: var(--space-5);
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.hero__tagline {
+  max-width: 28ch;
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+}
+.hero__tagline em {
+  font-family: var(--font-body);   /* Bespoke Serif italic — Tanker has no italic */
+  font-style: italic;
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .hero { min-height: 92vh; padding-bottom: var(--space-7); }
+  .hero__bottom { flex-direction: column; align-items: flex-start; }
+  .hero__tagline { text-align: left; }
+}
+
+/* ==========================================================================
+   NAVIGATION — sticky top, gradient border-top carries the brand stripe.
+   ========================================================================== */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  background:
+    linear-gradient(var(--paper), var(--paper)) padding-box,
+    var(--gradient-brand) border-box;
+  border-top: 10px solid transparent;
+  border-bottom: var(--border-thin);
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) clamp(var(--space-4), 4vw, var(--space-7));
+  max-width: var(--container-wide);
+  margin-inline: auto;
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  letter-spacing: 0;
+}
+.nav__brand-mark {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background: var(--ink);
+  clip-path: polygon(0 100%, 35% 30%, 50% 55%, 70% 10%, 100% 100%);
+}
+
+.nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+.nav__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: var(--space-2) 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.nav__link:hover { border-bottom-color: var(--cyan-deep); }
+
+.nav__cta {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  background: var(--canary);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  text-decoration: none;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.nav__cta:hover { background: var(--canary-deep); text-decoration: none; }
+
+/* Mobile nav toggle */
+.nav__toggle {
+  display: none;
+  background: none;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+  .nav__list { display: none; gap: var(--space-3); }
+  .nav__cta { display: none; }
+  .nav__toggle { display: inline-block; }
+  .nav.is-open .nav__list,
+  .nav.is-open .nav__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: var(--space-4) 0 var(--space-2);
+    gap: var(--space-3);
+    border-top: var(--border-thin);
+    margin-top: var(--space-3);
+  }
+  .nav.is-open .nav__inner { flex-wrap: wrap; }
+  .nav.is-open .nav__cta { display: inline-flex; align-self: flex-start; }
+  .nav.is-open .nav__link { padding: var(--space-2) 0; }
+}
+
+/* ==========================================================================
+   SECTION SHARED — heading lockup used across content sections.
+   ========================================================================== */
+
+.section-head {
+  max-width: var(--container-narrow);
+  margin: 0 0 var(--space-7);
+}
+.section-head__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3);
+}
+.section-head__lede {
+  font-size: var(--fs-md);
+  color: var(--gray-700);
+  max-width: 60ch;
+  line-height: var(--lh-relaxed);
+  margin: 0;
+}
+.section-head__lede em {
+  font-style: italic;
+}
+
+.section--alt { background: var(--gray-50); }
+.section--ink { background: var(--ink); color: var(--paper); }
+
+/* Bottom edge ribbon — for section dividers */
+.section-divider {
+  height: 6px;
+  background: var(--gradient-brand);
+  border-bottom: 2px solid var(--ink);
+}
+
+/* ==========================================================================
+   ABOUT / MISSION
+   ========================================================================== */
+
+.about__body {
+  max-width: var(--container-narrow);
+}
+.about__body p {
+  font-size: var(--fs-md);
+  line-height: var(--lh-relaxed);
+  margin: 0 0 var(--space-5);
+  max-width: 60ch;
+}
+.about__body p:last-child { margin-bottom: 0; }
+.about__body p strong {
+  font-weight: 700;
+}
+.about__pullquote {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  line-height: 1.1;
+  margin: var(--space-7) 0 var(--space-5);
+  padding: var(--space-5) var(--space-5);
+  background: var(--canary);
+  border: var(--border-bold);
+  border-radius: var(--radius-lg);
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  display: inline-block;
+}
+.about__pullquote-attr {
+  display: block;
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: var(--fs-md);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: var(--space-3);
+  color: var(--gray-700);
+}
+
+/* ==========================================================================
+   LINEUP / SCHEDULE
+   Three groups: Music · Speakers · Schedule. Card-based, all use same shape.
+   ========================================================================== */
+
+.lineup__groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+@media (min-width: 800px) {
+  .lineup__groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.lineup-group__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-4);
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.lineup-group__title::before {
+  content: '';
+  width: 14px; height: 14px;
+  background: var(--cyan);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+.lineup-group:nth-child(2) .lineup-group__title::before { background: var(--lime); }
+.lineup-group:nth-child(3) .lineup-group__title::before { background: var(--canary); }
+.lineup-group:nth-child(4) .lineup-group__title::before { background: var(--aqua); }
+
+.lineup-group__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  border-top: var(--border-thin);
+}
+.lineup-group__list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: var(--border-thin);
+}
+.lineup-group__list .name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.lineup-group__list .meta {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--gray-600);
+  text-align: right;
+  flex-shrink: 0;
+}
+.lineup-group__list .tba {
+  color: var(--gray-500);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   VENDORS & ARTISANS — grid of card placeholders.
+   ========================================================================== */
+
+.vendors__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.vendor-card {
+  background: var(--white);
+  border: var(--border-bold);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+.vendor-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.vendor-card__category {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--gray-700);
+  background: var(--mint);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  align-self: flex-start;
+  margin-bottom: var(--space-3);
+}
+.vendor-card__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+}
+.vendor-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--gray-700);
+  margin: 0;
+}
+.vendor-card--placeholder .vendor-card__name { color: var(--gray-500); }
+.vendor-card__link {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  align-self: flex-start;
+  margin-top: var(--space-3);
+}
+
+/* ==========================================================================
+   COMMUNITY PARTNERS / SPONSORS — logo grid.
+   ========================================================================== */
+
+.partners__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+.partner-cell {
+  background: var(--white);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 120px;
+  gap: var(--space-2);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.partner-cell:hover { border-color: var(--ink); }
+.partner-cell__logo {
+  width: 64px; height: 64px;
+  background: var(--gray-100);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 400;
+  color: var(--gray-600);
+}
+.partner-cell__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
+}
+.partner-cell--placeholder .partner-cell__name { color: var(--gray-500); }
+
+/* ==========================================================================
+   GET INVOLVED — four columns: volunteer + three drives.
+   ========================================================================== */
+
+.involve__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 700px) {
+  .involve__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .involve__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.involve-card {
+  background: var(--white);
+  border: var(--border-bold);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.involve-card::before {
+  content: '';
+  display: block;
+  height: 6px;
+  margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-5)) var(--space-4);
+  background: var(--canary);
+}
+.involve-card:nth-child(2)::before { background: var(--lime); }
+.involve-card:nth-child(3)::before { background: var(--aqua); }
+.involve-card:nth-child(4)::before { background: var(--cyan); }
+
+.involve-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-3);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.involve-card__body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--gray-700);
+  margin: 0 0 var(--space-4);
+  flex: 1;
+}
+.involve-card__cta {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  align-self: flex-start;
+  text-decoration-color: var(--ink);
+}
+
+/* ==========================================================================
+   FAQ — native <details>/<summary> accordion. No JS required.
+   ========================================================================== */
+
+.faq__list {
+  max-width: var(--container-narrow);
+  border-top: var(--border-thin);
+}
+.faq-item {
+  border-bottom: var(--border-thin);
+}
+.faq-item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-family: var(--font-body);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1;
+  width: 28px; height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.faq-item[open] summary::after {
+  content: '\2013';   /* en dash */
+  background: var(--canary);
+  transform: rotate(180deg);
+}
+.faq-item__body {
+  padding: 0 0 var(--space-5);
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
+  color: var(--gray-700);
+  max-width: 60ch;
+}
+
+/* ==========================================================================
+   CONTACT — form + side info.
+   ========================================================================== */
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+}
+@media (min-width: 800px) {
+  .contact__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+}
+
+.form { display: flex; flex-direction: column; gap: var(--space-4); }
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 600px) {
+  .form__row--2 { grid-template-columns: 1fr 1fr; }
+}
+.form__field { display: flex; flex-direction: column; gap: var(--space-2); }
+.form__label {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.form__label-hint {
+  font-weight: 400;
+  font-size: var(--fs-xs);
+  color: var(--gray-500);
+  letter-spacing: 0;
+  text-transform: none;
+  margin-left: var(--space-2);
+}
+.form__input,
+.form__textarea {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  color: var(--ink);
+  background: var(--white);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-3);
+  width: 100%;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+.form__textarea { min-height: 160px; resize: vertical; }
+.form__input:focus,
+.form__textarea:focus {
+  outline: none;
+  box-shadow: 4px 4px 0 var(--canary);
+}
+
+.contact__aside {
+  background: var(--white);
+  border: var(--border-bold);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+.contact__aside h3 {
+  font-size: var(--fs-lg);
+  margin: 0 0 var(--space-3);
+}
+.contact__aside dl {
+  margin: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.contact__aside dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin: 0;
+}
+.contact__aside dd {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-base);
+}
+.contact__aside dd:last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-7) 0 var(--space-5);
+}
+.footer a { color: var(--paper); }
+.footer a:hover { color: var(--canary); }
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+@media (min-width: 700px) {
+  .footer__inner { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+.footer__brand {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0 0 var(--space-3);
+  color: var(--paper);
+}
+.footer__tagline {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--gray-300);
+  max-width: 36ch;
+  margin: 0;
+}
+
+.footer__heading {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--gray-300);
+  margin: 0 0 var(--space-3);
+}
+.footer__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.footer__list a {
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+}
+.footer__list a:hover { border-bottom-color: var(--canary); text-decoration: none; }
+
+.footer__bottom {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--gray-800);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--gray-400);
+}
+.footer__bottom a { color: var(--gray-400); }

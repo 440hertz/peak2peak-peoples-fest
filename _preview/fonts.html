@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hero font preview — Peak 2 Peak</title>
+  <meta name="theme-color" content="#f2f230" />
+
+  <!-- Load all candidate fonts in one request -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Big+Shoulders+Display:wght@800;900&family=Bowlby+One&family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Bungee&family=Alfa+Slab+One&family=Rubik+Mono+One&display=swap" />
+
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      padding: 2rem 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 64rem; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 2rem); }
+    h1.page-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+    }
+    .page-lede {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      max-width: 60ch;
+      margin: 0 0 2.5rem;
+    }
+    .specimen {
+      background: var(--gradient-brand-diag);
+      border-radius: 16px;
+      padding: 2rem clamp(1rem, 4vw, 2.5rem);
+      margin-bottom: 1.5rem;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .specimen::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.06) 1px, transparent 1.5px),
+                        radial-gradient(circle at 70% 80%, rgba(0,0,0,0.05) 1px, transparent 1.5px);
+      background-size: 24px 24px, 36px 36px;
+      pointer-events: none;
+      opacity: 0.7;
+      z-index: -1;
+    }
+    .specimen__label {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .specimen__label small {
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      color: var(--gray-700);
+      font-size: 0.85rem;
+    }
+    .title {
+      font-size: clamp(2.75rem, 1.5rem + 8vw, 6.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0;
+      font-weight: 800;
+    }
+    .title em { font-style: italic; font-weight: 700; }
+    .meta {
+      margin-top: 1.25rem;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* Per-specimen font assignments */
+    .f-bricolage   .title { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; }
+    .f-anton       .title { font-family: 'Anton', sans-serif; font-weight: 400; letter-spacing: -0.01em; }
+    .f-archivo     .title { font-family: 'Archivo Black', sans-serif; font-weight: 400; }
+    .f-bigshoulders .title { font-family: 'Big Shoulders Display', sans-serif; font-weight: 900; letter-spacing: -0.015em; }
+    .f-bowlby      .title { font-family: 'Bowlby One', sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+    .f-bungee      .title { font-family: 'Bungee', sans-serif; font-weight: 400; letter-spacing: -0.01em; font-size: clamp(2.25rem, 1.2rem + 6vw, 5rem); }
+    .f-alfaslab    .title { font-family: 'Alfa Slab One', serif; font-weight: 400; letter-spacing: -0.02em; }
+    .f-rubikmono   .title { font-family: 'Rubik Mono One', sans-serif; font-weight: 400; letter-spacing: -0.04em; font-size: clamp(2rem, 1rem + 5vw, 4.5rem); }
+
+    .pick-bar {
+      position: sticky;
+      bottom: 0;
+      background: var(--ink);
+      color: var(--canary);
+      padding: 0.75rem 1rem;
+      margin: 2rem -2rem -2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 class="page-title">Hero font candidates</h1>
+    <p class="page-lede">
+      Each block renders the actual hero composition in a different display
+      typeface. Pick the one you like and tell me the name — I'll wire it in
+      and delete this preview file.
+    </p>
+
+    <!-- 1 -->
+    <article class="specimen f-bricolage">
+      <div class="specimen__label">
+        <span>1 · Bricolage Grotesque <small>(current)</small></span>
+        <small>variable · expressive · modern</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 2 -->
+    <article class="specimen f-anton">
+      <div class="specimen__label">
+        <span>2 · Anton</span>
+        <small>condensed · iconic festival poster</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 3 -->
+    <article class="specimen f-archivo">
+      <div class="specimen__label">
+        <span>3 · Archivo Black</span>
+        <small>heavy uniform sans · billboard</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 4 -->
+    <article class="specimen f-bigshoulders">
+      <div class="specimen__label">
+        <span>4 · Big Shoulders Display</span>
+        <small>condensed · sturdy · industrial</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 5 -->
+    <article class="specimen f-bowlby">
+      <div class="specimen__label">
+        <span>5 · Bowlby One</span>
+        <small>chunky · rounded · playful</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 6 -->
+    <article class="specimen f-bungee">
+      <div class="specimen__label">
+        <span>6 · Bungee</span>
+        <small>stencil · festival-flyer · loud</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 7 -->
+    <article class="specimen f-alfaslab">
+      <div class="specimen__label">
+        <span>7 · Alfa Slab One</span>
+        <small>slab serif · vintage festival · heavy</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <!-- 8 -->
+    <article class="specimen f-rubikmono">
+      <div class="specimen__label">
+        <span>8 · Rubik Mono One</span>
+        <small>blocky monospace · arcade · activist zine</small>
+      </div>
+      <h2 class="title">Peak 2 Peak<br><em>Peoples'</em> Fest</h2>
+      <div class="meta">September 19, 2026 · Gilpin County Fairgrounds</div>
+    </article>
+
+    <p class="page-lede" style="margin-top: 2rem;">
+      Don't see one you love? Paste any Google Fonts or Fontshare font name
+      back to me and I'll add it. The body font (Inter) stays the same in
+      every option — only the headline changes.
+    </p>
+  </div>
+</body>
+</html>
