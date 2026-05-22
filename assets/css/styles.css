@@ -17,7 +17,7 @@ button { cursor: pointer; }
 a { color: inherit; }
 
 /* Scroll behavior */
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
@@ -209,7 +209,11 @@ a:hover { text-decoration-color: var(--ink); }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: var(--space-7) clamp(var(--space-4), 4vw, var(--space-7)) var(--space-6);
+  /* Pull the hero up behind the transparent nav so the gradient fills
+     the full viewport from the very top. Extra padding-top compensates
+     so hero content stays at the same visual position. */
+  margin-top: calc(-1 * var(--nav-height));
+  padding: calc(var(--space-7) + var(--nav-height)) clamp(var(--space-4), 4vw, var(--space-7)) var(--space-6);
   background: var(--gradient-brand-diag);
   overflow: hidden;
   isolation: isolate;
@@ -367,9 +371,9 @@ a:hover { text-decoration-color: var(--ink); }
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background: var(--paper);
+  background: transparent;
   border-bottom: var(--border-thin);
-  backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(12px);
 }
 
 /* Gradient stripe pinned to the top of the sticky nav.
