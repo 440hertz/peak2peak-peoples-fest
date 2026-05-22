@@ -367,12 +367,19 @@ a:hover { text-decoration-color: var(--ink); }
   position: sticky;
   top: 0;
   z-index: var(--z-nav);
-  background:
-    linear-gradient(var(--paper), var(--paper)) padding-box,
-    var(--gradient-brand) border-box;
-  border-top: 10px solid transparent;
+  background: var(--paper);
   border-bottom: var(--border-thin);
   backdrop-filter: saturate(180%) blur(8px);
+}
+
+/* Gradient stripe pinned to the top of the sticky nav.
+   Using ::before in normal flow avoids background-clip/backdrop-filter conflicts. */
+.nav::before {
+  content: '';
+  display: block;
+  height: 10px;
+  background: var(--gradient-brand);
+  border-bottom: 2px solid var(--ink);
 }
 
 .nav__inner {
