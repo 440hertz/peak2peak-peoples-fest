@@ -209,10 +209,8 @@ a:hover { text-decoration-color: var(--ink); }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* Pull the hero up behind the transparent nav so the gradient fills
-     the full viewport from the very top. Extra padding-top compensates
-     so hero content stays at the same visual position. */
-  margin-top: calc(-1 * var(--nav-height));
+  /* Fixed nav is out of flow so hero starts at y:0.
+     Extra padding-top ensures hero content clears the nav. */
   padding: calc(var(--space-7) + var(--nav-height)) clamp(var(--space-4), 4vw, var(--space-7)) var(--space-6);
   background: var(--gradient-brand-diag);
   overflow: hidden;
@@ -368,8 +366,10 @@ a:hover { text-decoration-color: var(--ink); }
    ========================================================================== */
 
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: var(--z-nav);
   background: transparent;
   border-bottom: var(--border-thin);
