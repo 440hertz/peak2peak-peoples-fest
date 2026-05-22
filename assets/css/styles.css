@@ -28,7 +28,7 @@ body {
   font-size: var(--fs-base);
   line-height: var(--lh-relaxed);
   color: var(--color-text);
-  background: var(--color-bg);
+  background: var(--gradient-brand-diag);
   font-feature-settings: 'kern', 'liga', 'ss01';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -99,6 +99,7 @@ a:hover { text-decoration-color: var(--ink); }
 
 .section {
   padding-block: var(--section-pad-y);
+  background: var(--paper);
 }
 
 /* ---------- Section-flag (a small label above section headings) ---------- */
