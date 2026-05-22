@@ -377,16 +377,6 @@ a:hover { text-decoration-color: var(--ink); }
   backdrop-filter: saturate(180%) blur(12px);
 }
 
-/* Gradient stripe pinned to the top of the sticky nav.
-   Using ::before in normal flow avoids background-clip/backdrop-filter conflicts. */
-.nav::before {
-  content: '';
-  display: block;
-  height: 10px;
-  background: var(--gradient-brand);
-  border-bottom: 2px solid var(--ink);
-}
-
 .nav__inner {
   display: flex;
   align-items: center;
