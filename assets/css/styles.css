@@ -203,52 +203,47 @@ a:hover { text-decoration-color: var(--ink); }
    ========================================================================== */
 
 .hero {
-  --hero-image: none;           /* set to url('./...') to enable image */
-
   position: relative;
-  min-height: 88vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* Fixed nav is out of flow so hero starts at y:0.
-     Extra padding-top ensures hero content clears the nav. */
-  padding: calc(var(--space-7) + var(--nav-height)) clamp(var(--space-4), 4vw, var(--space-7)) var(--space-6);
-  background: var(--gradient-brand-diag);
+  /* Full-bleed poster hero: no horizontal padding on the section — the title
+     block runs edge to edge. Vertical padding-top clears the fixed nav;
+     .hero__bottom re-adds side padding so the CTAs stay inset. */
+  padding: calc(var(--space-7) + var(--nav-height)) 0 var(--space-6);
   overflow: hidden;
   isolation: isolate;
 }
 
-/* When an image is set, replace the gradient with the image (cover fit). */
-.hero--has-image {
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0) 65%, rgba(0,0,0,0.25) 100%),
-    var(--hero-image) center/cover no-repeat,
-    var(--gradient-brand-diag);   /* fallback while image loads */
-}
-
-/* Decorative grain/noise overlay — purely textural, very subtle */
-.hero::before {
-  content: '';
+/* Poster artwork — the lowest hero layer. A real element (not a CSS
+   background on .hero) so the parallax script can translate it independently.
+   Extra height + negative top inset give the drift room to reveal the canoe
+   scene before the next section scrolls over it. */
+.hero__bg {
   position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.06) 1px, transparent 1.5px),
-                    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.05) 1px, transparent 1.5px);
-  background-size: 24px 24px, 36px 36px;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.7;
+  inset: -35% 0 0 0;
+  height: 170%;
+  background: url('../images/hero.webp') center 32% / cover no-repeat;
+  background-color: var(--indigo);   /* fills briefly while the image loads */
+  z-index: 0;
+  will-change: transform;
 }
 
 /* Hero no longer has its own top header — the sticky .nav above the hero
    provides the wordmark and primary navigation. The hero opens directly
-   with the title block. */
+   with the title block, which sits above the poster image layer. */
 
 .hero__center {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex: 1;
+  /* Full width, centered — the title runs edge to edge over the poster. */
   padding-block: var(--space-7);
+  text-align: center;
 }
 
 .hero__title {
@@ -258,8 +253,11 @@ a:hover { text-decoration-color: var(--ink); }
   line-height: 1;               /* fixed, predictable rhythm regardless of inline font */
   letter-spacing: -0.02em;      /* Tanker is wide — gentler negative tracking */
   text-transform: uppercase;
-  color: var(--ink);
-  margin: 0;
+  color: var(--paper);          /* inverted — reads over the dark poster */
+  /* one unified drop shadow across the whole wordmark so every word lifts
+     cleanly off the busy artwork */
+  text-shadow: 0 2px 10px rgba(13,13,13,.75), 0 1px 3px rgba(13,13,13,.9);
+  margin: 0 auto;
   max-width: 16ch;
 }
 .hero__title-line {
@@ -307,11 +305,13 @@ a:hover { text-decoration-color: var(--ink); }
   margin-top: var(--space-6);
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;      /* centered under the full-width title */
   gap: var(--space-3) var(--space-6);
   font-family: var(--font-body);
   font-size: var(--fs-md);
   font-weight: 600;
-  color: var(--ink);
+  color: var(--paper);          /* inverted over the poster */
+  text-shadow: 0 1px 12px rgba(13,13,13,.5);
   letter-spacing: var(--tracking-normal);
 }
 .hero__meta-item {
@@ -323,16 +323,20 @@ a:hover { text-decoration-color: var(--ink); }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--orange);    /* poster accent */
   display: inline-block;
 }
 
 .hero__bottom {
+  position: relative;
+  z-index: 1;                   /* above the poster image layer */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: end;
   gap: var(--space-5);
+  /* Section has no side padding (title is full-bleed); re-inset the CTAs. */
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-7));
 }
 
 .hero__ctas {
@@ -341,12 +345,33 @@ a:hover { text-decoration-color: var(--ink); }
   gap: var(--space-3);
 }
 
+/* Hero CTAs sit over the busy poster — the global dark/ghost fills vanish
+   into the artwork, so give the hero pair solid, high-contrast surfaces. */
+.hero .btn {
+  background: var(--orange);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.hero .btn:hover { background: var(--orange-deep); }
+.hero .btn--ghost {
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: var(--shadow-pop);
+}
+.hero .btn--ghost:hover {
+  background: var(--white);
+  color: var(--ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
 .hero__tagline {
   max-width: 28ch;
   font-family: var(--font-body);
   font-size: var(--fs-md);
   line-height: var(--lh-snug);
-  color: var(--ink);
+  color: var(--paper);          /* inverted over the poster */
+  text-shadow: 0 1px 12px rgba(13,13,13,.6);
   font-weight: 500;
   text-align: right;
 }
@@ -396,14 +421,15 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: var(--fs-lg);
   text-transform: uppercase;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--paper);          /* white over the frosted poster */
+  text-shadow: 0 1px 6px rgba(13,13,13,.6);
   letter-spacing: 0;
 }
 .nav__brand-mark {
   display: inline-block;
   width: 22px;
   height: 22px;
-  background: var(--ink);
+  background: var(--orange);    /* poster-accent peak mark */
   clip-path: polygon(0 100%, 35% 30%, 50% 55%, 70% 10%, 100% 100%);
 }
 
@@ -419,7 +445,8 @@ a:hover { text-decoration-color: var(--ink); }
   font-family: var(--font-body);
   font-size: var(--fs-sm);
   font-weight: 500;
-  color: var(--ink);
+  color: var(--paper);          /* white over the frosted poster */
+  text-shadow: 0 1px 6px rgba(13,13,13,.6);
   text-decoration: none;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
@@ -427,15 +454,15 @@ a:hover { text-decoration-color: var(--ink); }
   border-bottom: 2px solid transparent;
   transition: border-color var(--dur-fast) var(--ease-out);
 }
-.nav__link:hover { border-bottom-color: var(--cyan-deep); }
+.nav__link:hover { border-bottom-color: var(--orange); }
 
 .nav__cta {
   font-family: var(--font-body);
   font-size: var(--fs-sm);
   font-weight: 600;
   background: var(--canary);
-  color: var(--ink);
-  border: 2px solid var(--ink);
+  color: var(--paper);          /* white text on the orange pill */
+  border: 2px solid var(--paper);
   border-radius: var(--radius-pill);
   padding: var(--space-2) var(--space-4);
   text-decoration: none;
@@ -449,7 +476,9 @@ a:hover { text-decoration-color: var(--ink); }
 .nav__toggle {
   display: none;
   background: none;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--paper);
+  color: var(--paper);
+  text-shadow: 0 1px 6px rgba(13,13,13,.6);
   border-radius: var(--radius-md);
   padding: 6px 10px;
   font-family: var(--font-body);
@@ -463,6 +492,9 @@ a:hover { text-decoration-color: var(--ink); }
   .nav__list { display: none; gap: var(--space-3); }
   .nav__cta { display: none; }
   .nav__toggle { display: inline-block; }
+  /* Solid dark backdrop when expanded so the white links stay legible even
+     when the nav is scrolled over a light content section. */
+  .nav.is-open { background: var(--indigo); }
   .nav.is-open .nav__list,
   .nav.is-open .nav__cta {
     display: flex;

@@ -5,45 +5,47 @@
    ========================================================================== */
 
 :root {
-  /* ---------- Brand palette (user-supplied) ---------- */
-  --canary:        #f2f230;   /* primary brand accent — CTAs, key highlights */
-  --lime:          #c2f261;
-  --mint:          #91f291;
-  --aqua:          #61f2c2;
-  --cyan:          #30f2f2;
+  /* ---------- Brand palette (from the festival poster artwork) ----------
+     The yellow->cyan neon set was placeholder for stakeholder buy-in.
+     Reskinned to match the poster: deep indigo, teal, orange, cream. */
+  --indigo:        #251649;   /* poster sky / ink — deep base */
+  --teal:          #328694;   /* poster water / borders */
+  --orange:        #f79751;   /* poster mountains / foliage — primary accent */
+  --cream:         #fcc092;   /* poster highlights */
+  /* Slightly-darkened companion shades for hover / pressed / borders. */
+  --indigo-deep:   #1a0f36;
+  --teal-deep:     #256a76;
+  --orange-deep:   #d97b34;
 
-  /* Slightly-darkened companion shades for hover / pressed / borders.
-     Each is the same hue, lower lightness — readable on white. */
-  --canary-deep:   #c4c426;
-  --lime-deep:     #9bc94a;
-  --mint-deep:     #6dc96d;
-  --aqua-deep:     #45c99a;
-  --cyan-deep:     #1fc4c4;
+  /* Back-compat aliases: the old rainbow names remain in use by the lineup
+     markers, involve-card bars, and vendor pills. Each maps onto a poster
+     color so those accent rotations stay distinct without touching styles.css. */
+  --canary:        var(--orange);
+  --cyan:          var(--teal);
+  --lime:          var(--cream);
+  --aqua:          var(--indigo);
+  --mint:          var(--cream);
+  --canary-deep:   var(--orange-deep);
+  --cyan-deep:     var(--teal-deep);
 
-  /* Signature gradient (yellow -> cyan) */
+  /* Signature gradient (indigo -> teal -> orange) */
   --gradient-brand: linear-gradient(
     90deg,
-    var(--canary) 0%,
-    var(--lime)   25%,
-    var(--mint)   50%,
-    var(--aqua)   75%,
-    var(--cyan)   100%
+    var(--indigo) 0%,
+    var(--teal)   55%,
+    var(--orange) 100%
   );
   --gradient-brand-diag: linear-gradient(
     135deg,
-    var(--canary) 0%,
-    var(--lime)   25%,
-    var(--mint)   50%,
-    var(--aqua)   75%,
-    var(--cyan)   100%
+    var(--indigo) 0%,
+    var(--teal)   55%,
+    var(--orange) 100%
   );
   --gradient-brand-vert: linear-gradient(
     180deg,
-    var(--canary) 0%,
-    var(--lime)   25%,
-    var(--mint)   50%,
-    var(--aqua)   75%,
-    var(--cyan)   100%
+    var(--indigo) 0%,
+    var(--teal)   55%,
+    var(--orange) 100%
   );
 
   /* ---------- Neutral scale ---------- */

@@ -31,6 +31,34 @@
   }
 
   /* -------------------------------------------------------------------------
+   * Hero poster parallax — the artwork drifts upward slower than the page,
+   * revealing the canoe scene before the next section scrolls over it.
+   * Progressive enhancement: without JS the image simply sits static.
+   * Honors prefers-reduced-motion.
+   * ----------------------------------------------------------------------- */
+  const parallax = document.querySelector('[data-parallax]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (parallax && !reduceMotion.matches) {
+    const DRIFT = 0.55;             // image moves at 55% of scroll speed
+    let ticking = false;
+
+    const update = () => {
+      parallax.style.transform = `translate3d(0, ${window.scrollY * DRIFT}px, 0)`;
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    update();   // set initial position
+  }
+
+  /* -------------------------------------------------------------------------
    * Contact form — Formspree-friendly submit handler.
    * Posts JSON via fetch so we can show inline success/error without
    * navigating away. Works whether or not Formspree is wired up — if the
