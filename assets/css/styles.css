@@ -371,7 +371,8 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: var(--fs-md);
   line-height: var(--lh-snug);
   color: var(--paper);          /* inverted over the poster */
-  text-shadow: 0 1px 12px rgba(13,13,13,.6);
+  /* tighter, darker shadow so the quote reads over the light artwork */
+  text-shadow: 0 2px 8px rgba(13,13,13,.9), 0 1px 3px rgba(13,13,13,.95);
   font-weight: 500;
   text-align: right;
 }
@@ -422,7 +423,7 @@ a:hover { text-decoration-color: var(--ink); }
   text-transform: uppercase;
   text-decoration: none;
   color: var(--paper);          /* white over the frosted poster */
-  text-shadow: 0 1px 6px rgba(13,13,13,.6);
+  text-shadow: 0 1px 3px rgba(13,13,13,.95), 0 0 4px rgba(13,13,13,.75);
   letter-spacing: 0;
 }
 .nav__brand-mark {
@@ -446,7 +447,7 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--paper);          /* white over the frosted poster */
-  text-shadow: 0 1px 6px rgba(13,13,13,.6);
+  text-shadow: 0 1px 3px rgba(13,13,13,.95), 0 0 4px rgba(13,13,13,.75);
   text-decoration: none;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
@@ -478,7 +479,7 @@ a:hover { text-decoration-color: var(--ink); }
   background: none;
   border: 2px solid var(--paper);
   color: var(--paper);
-  text-shadow: 0 1px 6px rgba(13,13,13,.6);
+  text-shadow: 0 1px 3px rgba(13,13,13,.95), 0 0 4px rgba(13,13,13,.75);
   border-radius: var(--radius-md);
   padding: 6px 10px;
   font-family: var(--font-body);
