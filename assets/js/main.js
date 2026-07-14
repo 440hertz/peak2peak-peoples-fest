@@ -59,6 +59,29 @@
   }
 
   /* -------------------------------------------------------------------------
+   * Nav color flip — the header is white text over the hero poster, but once
+   * it scrolls onto the light content below, flip it to a pale glass bar with
+   * black text so the menu stays readable. Toggles the .is-scrolled class.
+   * ----------------------------------------------------------------------- */
+  const heroEl = document.querySelector('.hero');
+  if (nav && heroEl) {
+    let navTicking = false;
+    const updateNav = () => {
+      // Flip when the fixed nav's lower edge passes the bottom of the hero.
+      const threshold = heroEl.offsetHeight - nav.offsetHeight;
+      nav.classList.toggle('is-scrolled', window.scrollY >= threshold);
+      navTicking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!navTicking) {
+        window.requestAnimationFrame(updateNav);
+        navTicking = true;
+      }
+    }, { passive: true });
+    updateNav();   // set initial state
+  }
+
+  /* -------------------------------------------------------------------------
    * Gallery lightbox — click a thumbnail to view the large image with
    * caption; navigate with on-screen arrows or the keyboard; close with the
    * button, a backdrop click, or Escape. Progressive enhancement: without JS
