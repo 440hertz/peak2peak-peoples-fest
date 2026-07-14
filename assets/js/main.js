@@ -98,11 +98,11 @@
           const body = await res.json().catch(() => ({}));
           status.textContent = body && body.error
             ? `Couldn't send: ${body.error}`
-            : 'Something went wrong sending your message. Please try again, or email hello@peak2peakpeoplesfest.com.';
+            : 'Something went wrong sending your message. Please try again, or email info@peak2peakpeoplesfest.com.';
           status.style.color = '#993333';
         }
       } catch (err) {
-        status.textContent = 'Network error. Please try again, or email hello@peak2peakpeoplesfest.com.';
+        status.textContent = 'Network error. Please try again, or email info@peak2peakpeoplesfest.com.';
         status.style.color = '#993333';
       }
     });
