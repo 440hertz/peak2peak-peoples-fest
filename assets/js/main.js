@@ -59,6 +59,71 @@
   }
 
   /* -------------------------------------------------------------------------
+   * Gallery lightbox — click a thumbnail to view the large image with
+   * caption; navigate with on-screen arrows or the keyboard; close with the
+   * button, a backdrop click, or Escape. Progressive enhancement: without JS
+   * the thumbnails remain visible, they just don't expand.
+   * ----------------------------------------------------------------------- */
+  const lightbox = document.querySelector('[data-lightbox]');
+  const galleryItems = Array.prototype.slice.call(
+    document.querySelectorAll('.gallery__item')
+  );
+
+  if (lightbox && galleryItems.length) {
+    const lbImg = lightbox.querySelector('[data-lb-img]');
+    const lbCaption = lightbox.querySelector('[data-lb-caption]');
+    const btnClose = lightbox.querySelector('[data-lb-close]');
+    const btnPrev = lightbox.querySelector('[data-lb-prev]');
+    const btnNext = lightbox.querySelector('[data-lb-next]');
+    let current = 0;
+    let lastFocused = null;
+
+    const show = (index) => {
+      current = (index + galleryItems.length) % galleryItems.length;
+      const item = galleryItems[current];
+      const img = item.querySelector('img');
+      lbImg.src = item.getAttribute('data-full');
+      lbImg.alt = img ? img.alt : '';
+      lbCaption.textContent = item.getAttribute('data-caption') || '';
+    };
+
+    const open = (index) => {
+      lastFocused = document.activeElement;
+      show(index);
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+      btnClose.focus();
+    };
+
+    const close = () => {
+      lightbox.hidden = true;
+      lbImg.src = '';
+      document.body.style.overflow = '';
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    };
+
+    galleryItems.forEach((item, i) => {
+      item.addEventListener('click', () => open(i));
+    });
+
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', () => show(current - 1));
+    btnNext.addEventListener('click', () => show(current + 1));
+
+    // Backdrop click (but not clicks on the image or controls) closes.
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.hidden) return;
+      if (event.key === 'Escape') close();
+      else if (event.key === 'ArrowLeft') show(current - 1);
+      else if (event.key === 'ArrowRight') show(current + 1);
+    });
+  }
+
+  /* -------------------------------------------------------------------------
    * Contact form — Formspree-friendly submit handler.
    * Posts JSON via fetch so we can show inline success/error without
    * navigating away. Works whether or not Formspree is wired up — if the

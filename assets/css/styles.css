@@ -1048,3 +1048,119 @@ a:hover { text-decoration-color: var(--ink); }
   color: var(--gray-400);
 }
 .footer__bottom a { color: var(--gray-400); }
+
+/* ==========================================================================
+   GALLERY — masonry-style photo grid + lightbox (last year's festival).
+   ========================================================================== */
+
+.gallery__grid {
+  /* CSS multi-column masonry: columns auto-fill by width, portrait and
+     landscape shots flow naturally without cropping. */
+  column-width: 260px;
+  column-gap: var(--space-3);
+}
+
+.gallery__item {
+  display: block;
+  width: 100%;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-md);
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+  break-inside: avoid;         /* keep each photo whole across columns */
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+.gallery__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.gallery__item:hover,
+.gallery__item:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pop);
+  outline: none;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(var(--space-4), 4vw, var(--space-7));
+  background: rgba(13, 8, 30, 0.94);   /* deep indigo wash */
+  backdrop-filter: blur(4px);
+}
+.lightbox[hidden] { display: none; }
+
+.lightbox__figure {
+  margin: 0;
+  max-width: min(1100px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.lightbox__img {
+  max-width: 100%;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 2px solid var(--paper);
+  border-radius: var(--radius-md);
+  background: var(--indigo);
+}
+.lightbox__caption {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  color: var(--paper);
+  text-align: center;
+  min-height: 1.2em;           /* reserve space so nav doesn't jump */
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  background: rgba(250, 250, 247, 0.12);
+  color: var(--paper);
+  border: 2px solid rgba(250, 250, 247, 0.5);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  line-height: 1;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.lightbox__close:hover,
+.lightbox__nav:hover { background: rgba(250, 250, 247, 0.28); }
+
+.lightbox__close {
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 48px;
+  height: 48px;
+  font-size: 1.75rem;
+}
+.lightbox__nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  font-size: 2rem;
+}
+.lightbox__nav--prev { left: var(--space-4); }
+.lightbox__nav--next { right: var(--space-4); }
+
+@media (max-width: 640px) {
+  .lightbox__nav { width: 44px; height: 44px; font-size: 1.5rem; }
+  .lightbox__nav--prev { left: var(--space-2); }
+  .lightbox__nav--next { right: var(--space-2); }
+}
