@@ -30,3 +30,7 @@ yarn-error.log*
 # Build output (none yet — placeholder)
 /dist
 /build
+
+# Superpowers planning artifacts (specs/plans/brainstorms) — keep local, out of repo
+docs/superpowers/
+.superpowers/
