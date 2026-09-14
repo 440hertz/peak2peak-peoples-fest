@@ -657,6 +657,55 @@ a:hover { text-decoration-color: var(--ink); }
 .lineup-group:nth-child(3) .lineup-group__title::before { background: var(--canary); }
 .lineup-group:nth-child(4) .lineup-group__title::before { background: var(--aqua); }
 
+/* Day-of schedule — lifted out of the two-up grid: 16 chronological rows
+   never balanced against the 5-item lists. Full width, time-led, and split
+   into two columns once there's room. */
+.lineup__schedule {
+  margin-top: var(--space-8);
+  padding-top: var(--space-7);
+  border-top: var(--border-bold);
+}
+.lineup__schedule .lineup-group__title::before { background: var(--aqua); }
+.schedule__list {
+  list-style: none;
+  margin: 0; padding: 0;
+  border-top: var(--border-thin);
+}
+.schedule__list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+  padding: var(--space-4) 0;
+  border-bottom: var(--border-thin);
+  break-inside: avoid;
+}
+.schedule__time {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--gray-600);
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 5.5rem;
+}
+.schedule__event {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.schedule__note {
+  font-size: var(--fs-xs);
+  color: var(--gray-500);
+  margin-top: var(--space-4);
+}
+@media (min-width: 800px) {
+  .schedule__list {
+    column-count: 2;
+    column-gap: var(--space-8);
+  }
+}
+
 .lineup-group__list {
   list-style: none;
   margin: 0; padding: 0;
@@ -697,17 +746,15 @@ a:hover { text-decoration-color: var(--ink); }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: var(--space-4);
-  margin-bottom: var(--space-6);
 }
 .vendor-card {
   background: var(--white);
   border: var(--border-bold);
   border-radius: var(--radius-md);
   padding: var(--space-5);
-  min-height: 180px;
-  display: flex;
+  display: flex;   /* grid stretch equalises row heights; no min-height needed */
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   position: relative;
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
@@ -716,22 +763,36 @@ a:hover { text-decoration-color: var(--ink); }
   transform: translate(-2px, -2px);
   box-shadow: 4px 4px 0 var(--ink);
 }
-.vendor-card__category {
-  font-family: var(--font-body);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wider);
-  color: var(--gray-700);
-  background: var(--mint);
-  padding: 2px 8px;
-  border-radius: var(--radius-pill);
-  align-self: flex-start;
-  margin-bottom: var(--space-3);
+.vendors__group + .vendors__group {
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: var(--border-bold);   /* the divider between categories */
 }
+.vendors__group-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.vendors__group-title::before {
+  content: '';
+  width: 14px; height: 14px;
+  background: var(--cyan);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+}
+.vendors__group:nth-of-type(2) .vendors__group-title::before { background: var(--lime); }
+.vendors__group:nth-of-type(3) .vendors__group-title::before { background: var(--canary); }
+.vendors__group:nth-of-type(4) .vendors__group-title::before { background: var(--aqua); }
+.vendors__group:nth-of-type(5) .vendors__group-title::before { background: var(--mint); }
 .vendor-card__name {
   font-family: var(--font-display);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-xl);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -750,52 +811,9 @@ a:hover { text-decoration-color: var(--ink); }
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
   align-self: flex-start;
-  margin-top: var(--space-3);
+  margin-top: auto;            /* pins the link to the card's base */
+  padding-top: var(--space-3);
 }
-
-/* ==========================================================================
-   COMMUNITY PARTNERS / SPONSORS — logo grid.
-   ========================================================================== */
-
-.partners__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: var(--space-4);
-}
-.partner-cell {
-  background: var(--white);
-  border: var(--border-thin);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 120px;
-  gap: var(--space-2);
-  transition: border-color var(--dur-fast) var(--ease-out);
-}
-.partner-cell:hover { border-color: var(--ink); }
-.partner-cell__logo {
-  width: 64px; height: 64px;
-  background: var(--gray-100);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: var(--fs-md);
-  font-weight: 400;
-  color: var(--gray-600);
-}
-.partner-cell__name {
-  font-family: var(--font-body);
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--ink);
-}
-.partner-cell--placeholder .partner-cell__name { color: var(--gray-500); }
 
 /* ==========================================================================
    GET INVOLVED — four columns: volunteer + three drives.
