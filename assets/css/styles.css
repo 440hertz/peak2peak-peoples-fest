@@ -694,6 +694,16 @@ a:hover { text-decoration-color: var(--ink); }
   text-transform: uppercase;
   letter-spacing: -0.005em;
 }
+.schedule__detail {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--gray-600);
+  margin-top: var(--space-2);
+}
 .schedule__note {
   font-size: var(--fs-xs);
   color: var(--gray-500);
@@ -731,7 +741,16 @@ a:hover { text-decoration-color: var(--ink); }
   font-size: var(--fs-sm);
   color: var(--gray-600);
   text-align: right;
-  flex-shrink: 0;
+  min-width: 0;          /* long values wrap instead of overflowing the viewport */
+}
+/* Below this width a name + long meta cannot share a line; stack them. */
+@media (max-width: 560px) {
+  .lineup-group__list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+  .lineup-group__list .meta { text-align: left; }
 }
 .lineup-group__list .tba {
   color: var(--gray-500);
