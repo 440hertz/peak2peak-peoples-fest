@@ -663,7 +663,7 @@ a:hover { text-decoration-color: var(--ink); }
    was taller than the lists beside it, which stranded space under them. */
 .lineup__speakers {
   margin-top: var(--space-8);
-  padding-top: var(--space-7);
+  padding-top: var(--space-8);
   border-top: var(--border-bold);
 }
 @media (min-width: 800px) {
@@ -676,7 +676,7 @@ a:hover { text-decoration-color: var(--ink); }
 
 .lineup__schedule {
   margin-top: var(--space-8);
-  padding-top: var(--space-7);
+  padding-top: var(--space-8);
   border-top: var(--border-bold);
 }
 .lineup__schedule .lineup-group__title::before { background: var(--aqua); }
